@@ -106,3 +106,22 @@ function get_first_position($domen, $number, $access_token) {
     
     return $data;
 }
+
+function delete_lot($domen, $number, $access_token, $id) {
+    $url     = "https://${domen}/api/subscribers/${number}/exchange/lots/created/${id}";
+    $headers = array(
+        'Authorization: Bearer ' . $access_token,
+        'Content-Type: application/json'
+    );
+    $ch      = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    $data = json_decode(curl_exec($ch), true);
+    curl_close($ch);
+    
+    return $data;
+}
