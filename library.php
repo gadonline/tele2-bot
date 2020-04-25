@@ -15,8 +15,8 @@ function clean_sms($modem)
     } while ($stop);
 }
 
-function request_code($domen, $number) {
-    $url = "https://${domen}/api/validation/number/${number}";
+function request_code($domain, $number) {
+    $url = "https://${domain}/api/validation/number/${number}";
     $ch  = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -46,8 +46,8 @@ function get_code($modem) {
     return false;
 }
 
-function get_access_token($domen, $number, $code) {
-    $url     = "https://${domen}/auth/realms/tele2-b2c/protocol/openid-connect/token";
+function get_access_token($domain, $number, $code) {
+    $url     = "https://${domain}/auth/realms/tele2-b2c/protocol/openid-connect/token";
     $params  = array(
         'client_id' => 'digital-suite-web-app',
         'grant_type' => 'password',
@@ -71,8 +71,8 @@ function get_access_token($domen, $number, $code) {
     return false;
 }
 
-function set_lot($domen, $number, $access_token) {
-    $url     = "https://${domen}/api/subscribers/${number}/exchange/lots/created";
+function set_lot($domain, $number, $access_token) {
+    $url     = "https://${domain}/api/subscribers/${number}/exchange/lots/created";
     $headers = array(
         'Authorization: Bearer ' . $access_token,
         'Content-Type: application/json'
@@ -91,8 +91,8 @@ function set_lot($domen, $number, $access_token) {
     return $data;
 }
 
-function get_first_position($domen, $number, $access_token) {
-    $url     = "https://${domen}/api/subscribers/${number}/exchange/lots?trafficType=voice&volume=50&cost=40&offset=0&limit=4";
+function get_first_position($domain, $number, $access_token) {
+    $url     = "https://${domain}/api/subscribers/${number}/exchange/lots?trafficType=voice&volume=50&cost=40&offset=0&limit=4";
     $headers = array(
         'Authorization: Bearer ' . $access_token,
     );
@@ -107,8 +107,8 @@ function get_first_position($domen, $number, $access_token) {
     return $data;
 }
 
-function delete_lot($domen, $number, $access_token, $id) {
-    $url     = "https://${domen}/api/subscribers/${number}/exchange/lots/created/${id}";
+function delete_lot($domain, $number, $access_token, $id) {
+    $url     = "https://${domain}/api/subscribers/${number}/exchange/lots/created/${id}";
     $headers = array(
         'Authorization: Bearer ' . $access_token,
         'Content-Type: application/json'
