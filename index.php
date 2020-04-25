@@ -25,3 +25,6 @@ if ($access_token) {
     echo "Ошибка получения access_token\n";
     exit();
 }
+
+$lot = set_lot($config['domen'], $config['number'], $access_token);
+$first_position = get_first_position($config['domen'], $config['number'], $access_token);
