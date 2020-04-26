@@ -62,7 +62,7 @@ if (isset($options["d"])) {
 }
 
 if ($host === false || $user === false || $password === false || $number === false || $domain === false ) {
-    echo "Не заданы все необходимые параметры\n";
+    echo date('d.m.Y H:i:s ') . "Не заданы все необходимые параметры\n";
     exit();
 }
 
@@ -71,7 +71,7 @@ $modem = new Manoaratefy\NetworkTools\Modem($host, $user, $password);
 clean_sms($modem);
 
 if (request_code($domain, $number)) {
-    sleep(5);
+    sleeping(5);
 } else {
     exit();
 }
@@ -82,27 +82,21 @@ if ($code) {
     $access_token = get_access_token($domain, $number, $code);
 }
 
-if ($access_token) {
-    echo "Получен access_token \n";
-} else {
-    echo "Ошибка получения access_token\n";
+if ($access_token == false) {
     exit();
 }
 
 while ($active) {
-    echo "set_lot\n";
+    sleeping(3);
     $lot = set_lot($domain, $number, $access_token);
     
     if (isset($lot['data']['id'])){
-        echo "sleep\n";
-        sleep(10);
         do {
-            echo "get_first_position\n";
+            sleeping(10);
             $first_position = get_first_position($domain, $number, $access_token);
             
             if (isset($first_position['data'][0]['id'])) {
-                echo "sleep\n";
-                sleep(10); 
+                
             } else {
                 $active = false;
                 break;
@@ -114,15 +108,13 @@ while ($active) {
     }
     
     if ($active) {
-        echo "delete_lot\n";
+        sleeping(3);
         $delete = delete_lot($domain, $number, $access_token, $lot['data']['id']);
         
         if ($delete['meta']['status'] == "ERROR") {
             break;
         }
         
-        echo "sleep\n";
-        sleep(3); 
     }
     
 }
