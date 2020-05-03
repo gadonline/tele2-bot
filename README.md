@@ -1,6 +1,6 @@
 Бот предназначен для продажи минут в маркете tele2.
 
-#Установка
+# Установка
 
 Ставим entware с зависимостями:
 
@@ -16,6 +16,7 @@ exit
 
 ```
 /opt/bin/curl https://codeload.github.com/gadonline/tele2-bot/zip/master | /opt/bin/unzip -d /opt/ -
+/opt/bin/chmod +x /opt/tele2-bot-master/sntp-setting
 ```
 
 Дополняем cron задачами:
