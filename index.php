@@ -79,7 +79,7 @@ if (request_code($domain, $number)) {
 $code = get_code($modem);
 
 if ($code) {
-    $access_token = get_access_token($domain, $number, $code);
+    $access_token = get_access_token($domain, $number, $code, get_csrf_token($domain));
 }
 
 if ($access_token == false) {

@@ -49,7 +49,7 @@ function get_code($modem) {
     return false;
 }
 
-function get_access_token($domain, $number, $code) {
+function get_access_token($domain, $number, $code, $csrf_token) {
     echo date('d.m.Y H:i:s ') . "get_access_token\n";
     $url     = "https://${domain}/auth/realms/tele2-b2c/protocol/openid-connect/token";
     $params  = array(
@@ -65,6 +65,10 @@ function get_access_token($domain, $number, $code) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "X-csrftoken: $csrf_token"
+    ));
     $data = json_decode(curl_exec($ch), true);
     curl_close($ch);
     
@@ -153,7 +157,29 @@ function delete_lot($domain, $number, $access_token, $id) {
     return $data;
 }
 
-function sleeping($seconds){
+function sleeping($seconds) {
     echo date('d.m.Y H:i:s ') . "sleep $seconds\n";
     sleep($seconds);
+}
+
+function get_csrf_token($domain) {
+    echo date('d.m.Y H:i:s ') . "get_csrf_token\n";
+    $url     = "https://${domain}";
+    $ch      = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0');
+    $data = explode("\n", curl_exec($ch));
+    curl_close($ch);
+    
+    foreach ($data as $string) {
+        if (preg_match('/^<meta name=\'csrf-token-value\' content=\'/', $string)) {
+            $csrf_token = preg_replace('/^<meta name=\'csrf-token-value\' content=\'/', '', $string);
+            $csrf_token = preg_replace('/\'\/>$/', '', $csrf_token);
+            return $csrf_token;
+            break;
+        }
+    }
+    
+    return false;
 }
