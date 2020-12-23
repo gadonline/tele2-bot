@@ -70,7 +70,10 @@ $modem = new Manoaratefy\NetworkTools\Modem($host, $user, $password);
 
 clean_sms($modem);
 
-if (request_code($domain, $number)) {
+$csrf_token = readline('Введите X-csrftoken токен: ');
+$ajax_token = readline('Введите X-Ajax-Token токен: ');
+
+if (request_code($domain, $number, $csrf_token, $ajax_token)) {
     sleeping(5);
 } else {
     exit();
@@ -79,7 +82,7 @@ if (request_code($domain, $number)) {
 $code = get_code($modem);
 
 if ($code) {
-    $access_token = get_access_token($domain, $number, $code, get_csrf_token($domain));
+    $access_token = get_access_token($domain, $number, $code, $csrf_token, $ajax_token);
 }
 
 if ($access_token == false) {
