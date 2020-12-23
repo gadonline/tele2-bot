@@ -187,3 +187,12 @@ function get_csrf_token($domain) {
     
     return false;
 }
+
+function readline($prompt = null){
+    if($prompt){
+        echo $prompt;
+    }
+    $fp = fopen("php://stdin","r");
+    $line = rtrim(fgets($fp, 1024));
+    return $line;
+}
