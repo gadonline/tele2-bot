@@ -24,8 +24,9 @@ function request_code($domain, $number, $csrf_token, $ajax_token) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, '{"sender":"Tele2"}');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0');
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0",
+        "Content-Type: application/json;charset=utf-8",
         "X-csrftoken: $csrf_token",
         "X-Ajax-Token: $ajax_token"
     ));
@@ -53,7 +54,7 @@ function get_code($modem) {
     return false;
 }
 
-function get_access_token($domain, $number, $code, $csrf_token) {
+function get_access_token($domain, $number, $code, $csrf_token, $ajax_token) {
     echo date('d.m.Y H:i:s ') . "get_access_token\n";
     $url     = "https://${domain}/auth/realms/tele2-b2c/protocol/openid-connect/token";
     $params  = array(
@@ -69,9 +70,11 @@ function get_access_token($domain, $number, $code, $csrf_token) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0');
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "X-csrftoken: $csrf_token"
+        "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0",
+        "Content-Type: application/json;charset=utf-8",
+        "X-csrftoken: $csrf_token",
+        "X-Ajax-Token: $ajax_token"
     ));
     $data = json_decode(curl_exec($ch), true);
     curl_close($ch);
