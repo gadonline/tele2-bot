@@ -46,7 +46,7 @@ function get_code($modem) {
     $sms = $modem->smsread();
     
     if (isset($sms->Content) && preg_match('/ - ваш код для входа. Им можно воспользоваться только один раз.$/', $sms->Content)) {
-        $code = preg_replace('/ - ваш код для входа. Им можно воспользоваться только один раз.$/', '', $code);
+        $code = preg_replace('/ - ваш код для входа. Им можно воспользоваться только один раз.$/', '', $sms->Content);
         return $code;
     }
     
