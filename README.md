@@ -35,7 +35,7 @@ exit
 Устанавливаем tele2-bot:
 
 ```
-/opt/bin/curl https://codeload.github.com/gadonline/tele2-bot/zip/master | /opt/bin/unzip -d /opt/ -
+/opt/bin/curl https://codeload.github.com/gadonline/tele2-bot/zip/master | /opt/bin/unzip -o -d /opt/ -
 /opt/bin/chmod +x /opt/tele2-bot-master/sntp-setting
 ```
 
