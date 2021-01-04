@@ -25,10 +25,10 @@ function request_code($domain, $number, $csrf_token, $ajax_token) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, '{"sender":"Tele2"}');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0",
-        "Content-Type: application/json;charset=utf-8",
-        "X-csrftoken: $csrf_token",
-        "X-Ajax-Token: $ajax_token"
+        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
+        'Content-Type: application/json;charset=utf-8',
+        'X-csrftoken: ' . $csrf_token,
+        'X-Ajax-Token: ' . $ajax_token
     ));
     $data = json_decode(curl_exec($ch), true);
     curl_close($ch);
@@ -70,10 +70,10 @@ function get_access_token($domain, $number, $code, $csrf_token, $ajax_token) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0",
-        "Content-Type: application/x-www-form-urlencoded",
-        "X-csrftoken: $csrf_token",
-        "X-Ajax-Token: $ajax_token"
+        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
+        'Content-Type: application/x-www-form-urlencoded',
+        'X-csrftoken: ' . $csrf_token,
+        'X-Ajax-Token: ' . $ajax_token
     ));
     $data = json_decode(curl_exec($ch), true);
     curl_close($ch);
@@ -91,6 +91,7 @@ function set_lot($domain, $number, $access_token) {
     echo date('d.m.Y H:i:s ') . "set_lot\n";
     $url     = "https://${domain}/api/subscribers/${number}/exchange/lots/created";
     $headers = array(
+        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
         'Content-Type: application/json'
     );
@@ -118,6 +119,7 @@ function get_first_position($domain, $number, $access_token) {
     echo date('d.m.Y H:i:s ') . "get_first_position\n";
     $url     = "https://${domain}/api/subscribers/${number}/exchange/lots?trafficType=voice&volume=50&cost=40&offset=0&limit=4";
     $headers = array(
+        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
     );
     $ch      = curl_init();
@@ -141,6 +143,7 @@ function delete_lot($domain, $number, $access_token, $id) {
     echo date('d.m.Y H:i:s ') . "delete_lot\n";
     $url     = "https://${domain}/api/subscribers/${number}/exchange/lots/created/${id}";
     $headers = array(
+        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
         'Content-Type: application/json'
     );
