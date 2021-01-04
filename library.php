@@ -71,7 +71,7 @@ function get_access_token($domain, $number, $code, $csrf_token, $ajax_token) {
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0",
-        "Content-Type: application/json;charset=utf-8",
+        "Content-Type: application/x-www-form-urlencoded",
         "X-csrftoken: $csrf_token",
         "X-Ajax-Token: $ajax_token"
     ));

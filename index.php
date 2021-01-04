@@ -72,7 +72,9 @@ clean_sms($modem);
 
 $csrf_token = readline('Введите X-csrftoken токен: ');
 $ajax_token = readline('Введите X-Ajax-Token токен: ');
+$access_token = readline('Введите access_token токен: ');
 
+/*
 if (request_code($domain, $number, $csrf_token, $ajax_token)) {
     sleeping(5);
 } else {
@@ -88,6 +90,7 @@ if ($code) {
 if ($access_token == false) {
     exit();
 }
+*/
 
 while ($active) {
     sleeping(3);
