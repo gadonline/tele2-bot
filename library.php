@@ -198,6 +198,6 @@ function readline($prompt = null){
         echo $prompt;
     }
     $fp = fopen("php://stdin","r");
-    $line = rtrim(fgets($fp, 1024));
+    $line = rtrim(fgets($fp, 2048));
     return $line;
 }

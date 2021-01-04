@@ -70,8 +70,11 @@ $modem = new Manoaratefy\NetworkTools\Modem($host, $user, $password);
 
 clean_sms($modem);
 
+/*
 $csrf_token = readline('Введите X-csrftoken токен: ');
 $ajax_token = readline('Введите X-Ajax-Token токен: ');
+*/
+
 $access_token = readline('Введите access_token токен: ');
 
 /*
