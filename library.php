@@ -26,7 +26,7 @@ function request_code($number) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Connection: keep-alive',
-        'Tele2-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
+        'Tele2-User-Agent: "mytele2-app/3.17.0"; "unknown"; "Android/9"; "Build/12998710"',
         'X-API-Version: 1',
         'User-Agent: okhttp/4.2.0'
     ));
