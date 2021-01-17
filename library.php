@@ -92,9 +92,9 @@ function get_access_token($number, $code) {
     return false;
 }
 
-function set_lot($domain, $number, $access_token) {
+function set_lot($number, $access_token) {
     echo date('d.m.Y H:i:s ') . "set_lot\n";
-    $url     = "https://${domain}/api/subscribers/${number}/exchange/lots/created";
+    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
@@ -120,9 +120,9 @@ function set_lot($domain, $number, $access_token) {
     return $data;
 }
 
-function get_first_position($domain, $number, $access_token) {
+function get_first_position($number, $access_token) {
     echo date('d.m.Y H:i:s ') . "get_first_position\n";
-    $url     = "https://${domain}/api/subscribers/${number}/exchange/lots?trafficType=voice&volume=50&cost=40&offset=0&limit=4";
+    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots?trafficType=voice&volume=50&cost=40&offset=0&limit=4";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
@@ -144,9 +144,9 @@ function get_first_position($domain, $number, $access_token) {
     return $data;
 }
 
-function delete_lot($domain, $number, $access_token, $id) {
+function delete_lot($number, $access_token, $id) {
     echo date('d.m.Y H:i:s ') . "delete_lot\n";
-    $url     = "https://${domain}/api/subscribers/${number}/exchange/lots/created/${id}";
+    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created/${id}";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
@@ -174,28 +174,6 @@ function delete_lot($domain, $number, $access_token, $id) {
 function sleeping($seconds) {
     echo date('d.m.Y H:i:s ') . "sleep $seconds\n";
     sleep($seconds);
-}
-
-function get_csrf_token($domain) {
-    echo date('d.m.Y H:i:s ') . "get_csrf_token\n";
-    $url     = "https://${domain}";
-    $ch      = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0');
-    $data = explode("\n", curl_exec($ch));
-    curl_close($ch);
-    
-    foreach ($data as $string) {
-        if (preg_match('/^<meta name=\'csrf-token-value\' content=\'/', $string)) {
-            $csrf_token = preg_replace('/^<meta name=\'csrf-token-value\' content=\'/', '', $string);
-            $csrf_token = preg_replace('/\'\/>$/', '', $csrf_token);
-            return $csrf_token;
-            break;
-        }
-    }
-    
-    return false;
 }
 
 function readline($prompt = null){

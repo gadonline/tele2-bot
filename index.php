@@ -7,7 +7,6 @@ $host       = false;
 $user       = false;
 $password   = false;
 $number     = false;
-$domain     = false;
 $shortopts  = "";
 $shortopts .= "h:";
 $shortopts .= "u:";
@@ -35,10 +34,6 @@ if (is_file(dirname(__FILE__) . "/.config.ini")){
         $number = $config["number"];
     }
     
-    if (isset($config["domain"])) {
-        $domain = $config["domain"];
-    }
-    
 }
 
 if (isset($options["h"])) {
@@ -57,11 +52,7 @@ if (isset($options["n"])) {
     $number = $options["n"];
 }
 
-if (isset($options["d"])) {
-    $domain = $options["d"];
-}
-
-if ($host === false || $user === false || $password === false || $number === false || $domain === false ) {
+if ($host === false || $user === false || $password === false || $number === false) {
     echo date('d.m.Y H:i:s ') . "Не заданы все необходимые параметры\n";
     exit();
 }
@@ -88,12 +79,12 @@ if ($access_token == false) {
 
 while ($active) {
     sleeping(3);
-    $lot = set_lot($domain, $number, $access_token);
+    $lot = set_lot($number, $access_token);
     
     if (isset($lot['data']['id'])){
         do {
             sleeping(10);
-            $first_position = get_first_position($domain, $number, $access_token);
+            $first_position = get_first_position($number, $access_token);
             
             if (isset($first_position['data'][0]['id'])) {
                 
@@ -109,7 +100,7 @@ while ($active) {
     
     if ($active) {
         sleeping(3);
-        $delete = delete_lot($domain, $number, $access_token, $lot['data']['id']);
+        $delete = delete_lot($number, $access_token, $lot['data']['id']);
         
         if ($delete['meta']['status'] == "ERROR") {
             break;

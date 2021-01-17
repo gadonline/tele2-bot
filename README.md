@@ -43,7 +43,7 @@ exit
 
 ```
 echo '@reboot root /opt/tele2-bot-master/sntp-setting' >> /opt/etc/crontab
-echo '33 23,0,1,2,3 * * * root /opt/bin/php-cli /opt/tele2-bot-master/index.php -h 192.168.8.1 -u admin -p PaSSword -n 70000000000 -d ivanovo.tele2.ru > /mnt/obb/tele2-bot.log 2> /mnt/obb/error-tele2-bot.log' >> /opt/etc/crontab
+echo '33 23,0,1,2,3 * * * root /opt/bin/php-cli /opt/tele2-bot-master/index.php -h 192.168.8.1 -u admin -p PaSSword -n 70000000000 > /mnt/obb/tele2-bot.log 2> /mnt/obb/error-tele2-bot.log' >> /opt/etc/crontab
 ```
 
 Разрешаем выполнение init скриптов:
