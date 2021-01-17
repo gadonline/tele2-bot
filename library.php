@@ -26,10 +26,12 @@ function request_code($number) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Authorization: Bearer',
         'Connection: keep-alive',
         'Tele2-User-Agent: "mytele2-app/3.17.0"; "unknown"; "Android/9"; "Build/12998710"',
         'X-API-Version: 1',
-        'User-Agent: okhttp/4.2.0'
+        'User-Agent: okhttp/4.2.0',
+        'Content-Type: application/json'
     ));
     $data = curl_exec($ch);
     $data = json_decode($data, true);
