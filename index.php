@@ -75,17 +75,16 @@ $csrf_token = readline('Введите X-csrftoken токен: ');
 $ajax_token = readline('Введите X-Ajax-Token токен: ');
 */
 
-$access_token = readline('Введите access_token токен: ');
+//$access_token = readline('Введите access_token токен: ');
 
-/*
-if (request_code($domain, $number, $csrf_token, $ajax_token)) {
+if (request_code($number)) {
     sleeping(5);
 } else {
     exit();
 }
 
 $code = get_code($modem);
-
+/*
 if ($code) {
     $access_token = get_access_token($domain, $number, $code, $csrf_token, $ajax_token);
 }

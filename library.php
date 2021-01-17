@@ -16,19 +16,19 @@ function clean_sms($modem)
     } while ($stop);
 }
 
-function request_code($domain, $number, $csrf_token, $ajax_token) {
+function request_code($number) {
     echo date('d.m.Y H:i:s ') . "request_code\n";
-    $url = "https://${domain}/api/validation/number/${number}";
+    $url = "https://my.tele2.ru/api/validation/number/${number}";
     $ch  = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, '{"sender":"Tele2"}');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
-        'Content-Type: application/json;charset=utf-8',
-        'X-csrftoken: ' . $csrf_token,
-        'X-Ajax-Token: ' . $ajax_token
+        'Connection: keep-alive',
+        'Tele2-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
+        'X-API-Version: 1',
+        'User-Agent: okhttp/4.2.0'
     ));
     $data = json_decode(curl_exec($ch), true);
     curl_close($ch);
