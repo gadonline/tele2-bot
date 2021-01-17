@@ -84,7 +84,7 @@ if (request_code($number)) {
 }
 
 $code = get_code($modem);
-/*
+
 if ($code) {
     $access_token = get_access_token($domain, $number, $code, $csrf_token, $ajax_token);
 }
@@ -92,8 +92,7 @@ if ($code) {
 if ($access_token == false) {
     exit();
 }
-*/
-
+var_dump($access_token);
 while ($active) {
     sleeping(3);
     $lot = set_lot($domain, $number, $access_token);

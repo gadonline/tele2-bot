@@ -59,7 +59,7 @@ function get_code($modem) {
 
 function get_access_token($domain, $number, $code, $csrf_token, $ajax_token) {
     echo date('d.m.Y H:i:s ') . "get_access_token\n";
-    $url     = "https://${domain}/auth/realms/tele2-b2c/protocol/openid-connect/token";
+    $url     = "https://my.tele2.ru/auth/realms/tele2-b2c/protocol/openid-connect/token";
     $params  = array(
         'client_id' => 'digital-suite-web-app',
         'grant_type' => 'password',
@@ -74,12 +74,15 @@ function get_access_token($domain, $number, $code, $csrf_token, $ajax_token) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
-        'Content-Type: application/x-www-form-urlencoded',
-        'X-csrftoken: ' . $csrf_token,
-        'X-Ajax-Token: ' . $ajax_token
+        'Authorization: Bearer',
+        'Connection: keep-alive',
+        'Tele2-User-Agent: "mytele2-app/3.17.0"; "unknown"; "Android/9"; "Build/12998710"',
+        'X-API-Version: 1',
+        'User-Agent: okhttp/4.2.0',
+        'Content-Type: application/json'
     ));
-    $data = json_decode(curl_exec($ch), true);
+    $data = curl_exec($ch);
+    $data = json_decode($data, true);
     curl_close($ch);
     
     if (isset($data['access_token'])) {
