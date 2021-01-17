@@ -24,7 +24,6 @@ function request_code($number) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, '{"sender":"Tele2"}');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Authorization: Bearer',
         'Connection: keep-alive',
@@ -72,7 +71,6 @@ function get_access_token($number, $code) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Authorization: Bearer',
         'Connection: keep-alive',
@@ -84,7 +82,7 @@ function get_access_token($number, $code) {
     $data = curl_exec($ch);
     $data = json_decode($data, true);
     curl_close($ch);
-    var_dump($data);
+    
     if (isset($data['access_token'])) {
         return $data['access_token'];
     } else {
