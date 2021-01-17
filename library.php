@@ -24,13 +24,15 @@ function request_code($number) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, '{"sender":"Tele2"}');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Connection: keep-alive',
         'Tele2-User-Agent: "mytele2-app/3.17.0"; "unknown"; "Android/9"; "Build/12998710"',
         'X-API-Version: 1',
         'User-Agent: okhttp/4.2.0'
     ));
-    $data = json_decode(curl_exec($ch), true);
+    $data = curl_exec($ch);
+    $data = json_decode($data, true);
     curl_close($ch);
     
     if ($data != NULL) {
