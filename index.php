@@ -84,9 +84,9 @@ if (request_code($number)) {
 }
 
 $code = get_code($modem);
-
+var_dump($code);
 if ($code) {
-    $access_token = get_access_token($domain, $number, $code, $csrf_token, $ajax_token);
+    $access_token = get_access_token($domain, $number, $code);
 }
 
 if ($access_token == false) {
