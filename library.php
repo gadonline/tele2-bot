@@ -79,12 +79,12 @@ function get_access_token($number, $code) {
         'Tele2-User-Agent: "mytele2-app/3.17.0"; "unknown"; "Android/9"; "Build/12998710"',
         'X-API-Version: 1',
         'User-Agent: okhttp/4.2.0',
-        'Content-Type: application/json'
+        'Content-Type: application/x-www-form-urlencoded'
     ));
     $data = curl_exec($ch);
     $data = json_decode($data, true);
     curl_close($ch);
-    
+    var_dump($data);
     if (isset($data['access_token'])) {
         return $data['access_token'];
     } else {
