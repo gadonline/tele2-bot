@@ -57,7 +57,7 @@ function get_code($modem) {
     return false;
 }
 
-function get_access_token($domain, $number, $code, $csrf_token, $ajax_token) {
+function get_access_token($number, $code) {
     echo date('d.m.Y H:i:s ') . "get_access_token\n";
     $url     = "https://my.tele2.ru/auth/realms/tele2-b2c/protocol/openid-connect/token";
     $params  = array(
