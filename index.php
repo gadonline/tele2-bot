@@ -7,6 +7,7 @@ $host       = false;
 $user       = false;
 $password   = false;
 $number     = false;
+$type       = false;
 $shortopts  = "";
 $shortopts .= "h:";
 $shortopts .= "u:";
@@ -53,12 +54,16 @@ if (isset($options["n"])) {
 }
 
 if (isset($options["t"])) {
-    $type = $options["t"];
+    
+    if ($options["t"] == 'voice' || $options["t"] == 'data') {
+        $type = $options["t"];
+    }
+    
 } else {
     $type = 'voice';
 }
 
-if ($host === false || $user === false || $password === false || $number === false || ($type != 'voice' || $type != 'data')) {
+if ($host === false || $user === false || $password === false || $number === false || $type) {
     echo date('d.m.Y H:i:s ') . "Не заданы все необходимые параметры\n";
     exit();
 }
