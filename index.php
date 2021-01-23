@@ -13,6 +13,7 @@ $shortopts .= "u:";
 $shortopts .= "p:";
 $shortopts .= "n:";
 $shortopts .= "d:";
+$shortopts .= "t:";
 $options    = getopt($shortopts);
 
 if (is_file(dirname(__FILE__) . "/.config.ini")){
@@ -52,7 +53,13 @@ if (isset($options["n"])) {
     $number = $options["n"];
 }
 
-if ($host === false || $user === false || $password === false || $number === false) {
+if (isset($options["t"])) {
+    $type = $options["t"];
+} else {
+    $type = 'voice';
+}
+
+if ($host === false || $user === false || $password === false || $number === false || ($type == 'voice' || $type == 'data')) {
     echo date('d.m.Y H:i:s ') . "Не заданы все необходимые параметры\n";
     exit();
 }
@@ -79,12 +86,12 @@ if ($access_token == false) {
 
 while ($active) {
     sleeping(3);
-    $lot = set_lot($number, $access_token);
+    $lot = set_lot($number, $access_token, $type);
     
     if (isset($lot['data']['id'])){
         do {
             sleeping(10);
-            $first_position = get_first_position($number, $access_token);
+            $first_position = get_first_position($number, $access_token, $type);
             
             if (isset($first_position['data'][0]['id'])) {
                 

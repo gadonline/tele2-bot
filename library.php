@@ -92,8 +92,15 @@ function get_access_token($number, $code) {
     return false;
 }
 
-function set_lot($number, $access_token) {
+function set_lot($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "set_lot\n";
+    
+    if ($type = 'data') {
+        $request = '{"volume":{"value":50,"uom":"min"},"cost":{"amount":40,"currency":"rub"},"trafficType":"voice"}';
+    } else {
+        $request = '{"volume":{"value":1,"uom":"gb"},"cost":{"amount":15,"currency":"rub"},"trafficType":"data"}';
+    }
+    
     $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
@@ -103,7 +110,7 @@ function set_lot($number, $access_token) {
     $ch      = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, '{"volume":{"value":50,"uom":"min"},"cost":{"amount":40,"currency":"rub"},"trafficType":"voice"}');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -120,9 +127,16 @@ function set_lot($number, $access_token) {
     return $data;
 }
 
-function get_first_position($number, $access_token) {
+function get_first_position($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "get_first_position\n";
-    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots?trafficType=voice&volume=50&cost=40&offset=0&limit=4";
+    
+    if ($type = 'data') {
+        $request = 'trafficType=data&volume=1&cost=15&offset=0&limit=4';
+    } else {
+        $request = 'trafficType=voice&volume=50&cost=40&offset=0&limit=4';
+    }
+    
+    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots?${request}";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
