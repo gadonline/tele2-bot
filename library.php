@@ -95,7 +95,7 @@ function get_access_token($number, $code) {
 function set_lot($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "set_lot\n";
     
-    if ($type = 'data') {
+    if ($type == 'data') {
         $request = '{"volume":{"value":1,"uom":"gb"},"cost":{"amount":15,"currency":"rub"},"trafficType":"data"}';
     } else {
         $request = '{"volume":{"value":50,"uom":"min"},"cost":{"amount":40,"currency":"rub"},"trafficType":"voice"}';
@@ -130,7 +130,7 @@ function set_lot($number, $access_token, $type) {
 function get_first_position($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "get_first_position\n";
     
-    if ($type = 'data') {
+    if ($type == 'data') {
         $request = 'trafficType=data&volume=1&cost=15&offset=0&limit=4';
     } else {
         $request = 'trafficType=voice&volume=50&cost=40&offset=0&limit=4';
