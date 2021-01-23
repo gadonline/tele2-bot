@@ -12,7 +12,6 @@ $shortopts .= "h:";
 $shortopts .= "u:";
 $shortopts .= "p:";
 $shortopts .= "n:";
-$shortopts .= "d:";
 $shortopts .= "t:";
 $options    = getopt($shortopts);
 
@@ -59,7 +58,7 @@ if (isset($options["t"])) {
     $type = 'voice';
 }
 
-if ($host === false || $user === false || $password === false || $number === false || ($type == 'voice' || $type == 'data')) {
+if ($host === false || $user === false || $password === false || $number === false || ($type != 'voice' || $type != 'data')) {
     echo date('d.m.Y H:i:s ') . "Не заданы все необходимые параметры\n";
     exit();
 }
