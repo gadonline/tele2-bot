@@ -63,7 +63,7 @@ if (isset($options["t"])) {
     $type = 'voice';
 }
 
-if ($host === false || $user === false || $password === false || $number === false || $type === false ) {
+if ($host === false || $user === false || $password === false || $number === false || $type === false) {
     echo date('d.m.Y H:i:s ') . "Не заданы все необходимые параметры\n";
     exit();
 }

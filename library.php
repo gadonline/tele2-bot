@@ -96,9 +96,9 @@ function set_lot($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "set_lot\n";
     
     if ($type = 'data') {
-        $request = '{"volume":{"value":50,"uom":"min"},"cost":{"amount":40,"currency":"rub"},"trafficType":"voice"}';
-    } else {
         $request = '{"volume":{"value":1,"uom":"gb"},"cost":{"amount":15,"currency":"rub"},"trafficType":"data"}';
+    } else {
+        $request = '{"volume":{"value":50,"uom":"min"},"cost":{"amount":40,"currency":"rub"},"trafficType":"voice"}';
     }
     
     $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
