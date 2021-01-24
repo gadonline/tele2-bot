@@ -188,7 +188,7 @@ function delete_lot($number, $access_token, $id) {
 function get_my_lots($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "get_my_lots\n";
     
-    $lots    = false
+    $lots    = false;
     $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
