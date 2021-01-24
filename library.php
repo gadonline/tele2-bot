@@ -232,7 +232,7 @@ function get_my_lots($number, $access_token, $type) {
     
     if ($return_var == 0) {
         foreach (json_decode($data[0], true) as $lot) {
-            if ($lot['type'] == $type && $date_now < date_create($lot['expirationDate']) ) {
+            if ($lot['trafficType'] == $type && $date_now < date_create($lot['expirationDate']) ) {
                 $lots[] = $lot;
             }
         }
