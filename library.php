@@ -188,34 +188,13 @@ function delete_lot($number, $access_token, $id) {
 function get_my_lots($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "get_my_lots\n";
     
-    $lots    = false;
-    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
-    $headers = array(
-        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
-        'Authorization: Bearer ' . $access_token,
-    );
-    $ch      = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $data = curl_exec($ch);
-    $data = json_decode($data, true);
-    curl_close($ch);
+    $lots       = false;
+    $url        = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
+    $user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0';
     
-    if ($data['meta']['status'] == "OK") {
-        echo date('d.m.Y H:i:s ') . $data['meta']['status'] . "\n";
-        
-        foreach ($data['data'] as $lot) {
-            if ($lot['status'] == 'bought' && $lot['type'] == $type) {
-                $lots[] = $lot;
-            }
-        }
-    } else {
-        echo date('d.m.Y H:i:s ') . $data['meta']['status'] . ": " . $data['meta']['message']. "\n";
-    }
+    exec("/opt/bin/curl " . $url . "-H 'Authorization: Bearer " . $access_token . "' -H 'User-Agent: " . $user_agent . "' | /opt/bin/jq '.data[] | select( .status == \"active\")' -c -M", $lots, $return_var);
     
-    return $lot;
+    return $lots;
 }
 
 function sleeping($seconds) {
