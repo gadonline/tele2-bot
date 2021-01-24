@@ -206,7 +206,7 @@ function get_my_lots($number, $access_token, $type) {
     if ($data['meta']['status'] == "OK") {
         echo date('d.m.Y H:i:s ') . $data['meta']['status'] . "\n";
         
-        foreach ($data['data' as $lot) {
+        foreach ($data['data'] as $lot) {
             if ($lot['status'] == 'bought' && $lot['type'] == $type) {
                 $lots[] = $lot;
             }
