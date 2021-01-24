@@ -231,8 +231,6 @@ function get_my_lots($number, $access_token, $type) {
     exec("/opt/bin/curl -s " . $url . " -H 'Authorization: Bearer " . $access_token . "' -H 'User-Agent: " . $user_agent . "' | /opt/bin/tr '}' '\n' | grep ',\"status\":\"active\",' -B 4 | grep -v \"^--$\" | /opt/bin/tr '\n' '}' | sed 's/^,\?/[/;s/,\?$/]/' ", $lots, $return_var);
     
     if ($return_var == 0) {
-        $lots = json_decode($lots[0], true);
-        
         foreach (json_decode($lots[0], true) as $lot) {
             if ($lot['type'] == $type && $date_now < date_create($lot['expirationDate']) ) {
                 $lots[] = $lot;
