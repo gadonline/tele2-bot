@@ -189,11 +189,11 @@ function update_lot($number, $access_token, $id, $type) {
     echo date('d.m.Y H:i:s ') . "update_lot\n";
     
     if ($type == 'data') {
-        $request = '{"cost":{"amount":15,"currency":"rub"}}';
+        $request = '{"cost":{"amount":15,"currency":"rub"},"seller":{"name":null,"emojis":["cat","cat","cat"]}}';
     } else {
-        $request = '{"cost":{"amount":40,"currency":"rub"}}';
+        $request = '{"cost":{"amount":40,"currency":"rub"},"seller":{"name":null,"emojis":["cat","cat","cat"]}}';
     }
-    
+
     $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created/${id}";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
