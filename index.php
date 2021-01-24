@@ -93,9 +93,8 @@ $last_my_lot = array_shift($my_lots);
 
 
 while ($active) {
-    sleeping(3);
-    $update = update_lot($number, $access_token, $last_my_lot['id'], $type);
     sleeping(10);
+    $update = update_lot($number, $access_token, $last_my_lot['id'], $type);
     
     if ($update['meta']['status'] == "ERROR") {
         break;
