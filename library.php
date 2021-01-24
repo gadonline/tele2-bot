@@ -186,7 +186,7 @@ function delete_lot($number, $access_token, $id) {
 }
 
 function update_lot($number, $access_token, $id, $type) {
-    echo date('d.m.Y H:i:s ') . "delete_lot\n";
+    echo date('d.m.Y H:i:s ') . "update_lot\n";
     
     if ($type == 'data') {
         $request = '{"cost":{"amount":15,"currency":"rub"}}';
@@ -207,7 +207,7 @@ function update_lot($number, $access_token, $id, $type) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'UPDATE');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
     $data = curl_exec($ch);
     $data = json_decode($data, true);
     curl_close($ch);
