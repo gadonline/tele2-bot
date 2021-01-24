@@ -192,7 +192,7 @@ function get_my_lots($number, $access_token, $type) {
     $url        = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0';
     
-    exec("/opt/bin/curl " . $url . "-H 'Authorization: Bearer " . $access_token . "' -H 'User-Agent: " . $user_agent . "' | /opt/bin/jq '.data[] | select( .status == \"active\")' -c -M", $lots, $return_var);
+    exec("/opt/bin/curl " . $url . " -H 'Authorization: Bearer " . $access_token . "' -H 'User-Agent: " . $user_agent . "' | /opt/bin/jq '.data[] | select( .status == \"active\")' -c -M", $lots, $return_var);
     
     return $lots;
 }
