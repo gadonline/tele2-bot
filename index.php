@@ -88,6 +88,8 @@ if ($access_token == false) {
     exit();
 }
 
+print_r(get_my_lots($number, $access_token, $type));
+
 while ($active) {
     sleeping(3);
     $lot = set_lot($number, $access_token, $type);

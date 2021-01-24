@@ -188,7 +188,8 @@ function delete_lot($number, $access_token, $id) {
 function get_my_lots($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "get_my_lots\n";
     
-    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/stats?trafficType=${type}";
+    $lots    = false
+    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $headers = array(
         'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
         'Authorization: Bearer ' . $access_token,
@@ -202,7 +203,19 @@ function get_my_lots($number, $access_token, $type) {
     $data = json_decode($data, true);
     curl_close($ch);
     
-    return $data;
+    if ($data['meta']['status'] == "OK") {
+        echo date('d.m.Y H:i:s ') . $data['meta']['status'] . "\n";
+        
+        foreach ($data['data' as $lot) {
+            if ($lot['status'] == 'bought' && $lot['type'] == $type) {
+                $lots[] = $lot;
+            }
+        }
+    } else {
+        echo date('d.m.Y H:i:s ') . $data['meta']['status'] . ": " . $data['meta']['message']. "\n";
+    }
+    
+    return $lot;
 }
 
 function sleeping($seconds) {
