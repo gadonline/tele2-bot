@@ -221,9 +221,10 @@ function update_lot($number, $access_token, $id, $type) {
     return $data;
 }
 
-function get_my_lots($number, $access_token) {
+function get_my_lots($number, $access_token, $type) {
     echo date('d.m.Y H:i:s ') . "get_my_lots\n";
     
+    $date_now   = date_create("now");
     $url        = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0';
     
@@ -231,6 +232,12 @@ function get_my_lots($number, $access_token) {
     
     if ($return_var == 0) {
         $lots = json_decode($lots[0], true);
+        
+        foreach (json_decode($lots[0], true) as $lot) {
+            if ($lot['type'] == $type && $date_now < date_create($lot['expirationDate']) ) {
+                $lots[] = $lot;
+            }
+        }
     } else {
         $lots = false;
     }
