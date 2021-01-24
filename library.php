@@ -185,13 +185,49 @@ function delete_lot($number, $access_token, $id) {
     return $data;
 }
 
-function get_my_lots($number, $access_token, $type) {
+function update_lot($number, $access_token, $id, $type) {
+    echo date('d.m.Y H:i:s ') . "delete_lot\n";
+    
+    if ($type == 'data') {
+        $request = '{"cost":{"amount":15,"currency":"rub"}}';
+    } else {
+        $request = '{"cost":{"amount":40,"currency":"rub"}}';
+    }
+    
+    $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created/${id}";
+    $headers = array(
+        'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0',
+        'Authorization: Bearer ' . $access_token,
+        'Content-Type: application/json'
+    );
+    $ch      = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'UPDATE');
+    $data = curl_exec($ch);
+    $data = json_decode($data, true);
+    curl_close($ch);
+    
+    if ($data['meta']['status'] == "OK") {
+        echo date('d.m.Y H:i:s ') . $data['meta']['status'] . "\n";
+    } else {
+        echo date('d.m.Y H:i:s ') . $data['meta']['status'] . ": " . $data['meta']['message']. "\n";
+    }
+    
+    return $data;
+}
+
+function get_my_lots($number, $access_token) {
     echo date('d.m.Y H:i:s ') . "get_my_lots\n";
     
     $url        = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created";
     $user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0';
     
-    exec("/opt/bin/curl " . $url . " -H 'Authorization: Bearer " . $access_token . "' -H 'User-Agent: " . $user_agent . "' | /opt/bin/tr '}' '\n' | grep ',\"status\":\"active\",' -B 4 | grep -v \"^--$\" | /opt/bin/tr '\n' '}' | sed 's/^,\?/[/;s/,\?$/]/' ", $lots, $return_var);
+    exec("/opt/bin/curl -s " . $url . " -H 'Authorization: Bearer " . $access_token . "' -H 'User-Agent: " . $user_agent . "' | /opt/bin/tr '}' '\n' | grep ',\"status\":\"active\",' -B 4 | grep -v \"^--$\" | /opt/bin/tr '\n' '}' | sed 's/^,\?/[/;s/,\?$/]/' ", $lots, $return_var);
     
     if ($return_var == 0) {
         $lots = json_decode($lots[0], true);

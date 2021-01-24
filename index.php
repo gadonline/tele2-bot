@@ -88,7 +88,10 @@ if ($access_token == false) {
     exit();
 }
 
-print_r(get_my_lots($number, $access_token, $type));
+$my_lots     = get_my_lots($number, $access_token, $type);
+$last_my_lot = array_shift($my_lots);
+
+print_r(update_lot($number, $access_token, $last_my_lot['id'], $type));
 
 while ($active) {
     sleeping(3);
