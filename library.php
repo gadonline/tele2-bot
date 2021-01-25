@@ -185,13 +185,13 @@ function delete_lot($number, $access_token, $id) {
     return $data;
 }
 
-function update_lot($number, $access_token, $id, $type) {
+function update_lot($number, $access_token, $id, $amount, $type) {
     echo date('d.m.Y H:i:s ') . "update_lot\n";
     
     if ($type == 'data') {
-        $request = '{"cost":{"amount":15,"currency":"rub"},"seller":{"name":null,"emojis":["cat","cat","cat"]}}';
+        $request = '{"cost":{"amount":' . $amount . ',"currency":"rub"},"seller":{"name":null,"emojis":["cat","cat","cat"]}}';
     } else {
-        $request = '{"cost":{"amount":40,"currency":"rub"},"seller":{"name":null,"emojis":["cat","cat","cat"]}}';
+        $request = '{"cost":{"amount":' . $amount . ',"currency":"rub"},"seller":{"name":null,"emojis":["cat","cat","cat"]}}';
     }
 
     $url     = "https://my.tele2.ru/api/subscribers/${number}/exchange/lots/created/${id}";

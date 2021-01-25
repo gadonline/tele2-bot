@@ -93,8 +93,24 @@ $last_my_lot = array_shift($my_lots);
 
 
 while ($active) {
+    
+    if ($type == 'data') {
+        $amount_1 = 15;
+        $amount_2 = 16;
+    } else {
+        $amount_1 = 40;
+        $amount_2 = 41;
+    }
+    
     sleeping(10);
-    $update = update_lot($number, $access_token, $last_my_lot['id'], $type);
+    $update = update_lot($number, $access_token, $last_my_lot['id'], $amount_1, $type);
+    
+    if ($update['meta']['status'] == "ERROR") {
+        break;
+    }
+    
+    sleeping(10);
+    $update = update_lot($number, $access_token, $last_my_lot['id'], $amount_2, $type);
     
     if ($update['meta']['status'] == "ERROR") {
         break;
