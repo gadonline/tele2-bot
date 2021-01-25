@@ -90,7 +90,7 @@ if ($access_token == false) {
 
 $my_lots     = get_my_lots($number, $access_token, $type);
 $last_my_lot = array_shift($my_lots);
-
+echo date('d.m.Y H:i:s ') . "last_my_lot id: $last_my_lot[id]\n";
 
 while ($active) {
     
